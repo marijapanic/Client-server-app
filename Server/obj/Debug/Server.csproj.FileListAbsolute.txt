@@ -1,0 +1,13 @@
+C:\Users\Marija\source\repos\Domen\Server\bin\Debug\Server.exe.config
+C:\Users\Marija\source\repos\Domen\Server\bin\Debug\Server.exe
+C:\Users\Marija\source\repos\Domen\Server\bin\Debug\Server.pdb
+C:\Users\Marija\source\repos\Domen\Server\bin\Debug\Domen.dll
+C:\Users\Marija\source\repos\Domen\Server\bin\Debug\Domen.pdb
+C:\Users\Marija\source\repos\Domen\Server\obj\Debug\Server.csprojAssemblyReference.cache
+C:\Users\Marija\source\repos\Domen\Server\obj\Debug\Server.FormaServer.resources
+C:\Users\Marija\source\repos\Domen\Server\obj\Debug\Server.Properties.Resources.resources
+C:\Users\Marija\source\repos\Domen\Server\obj\Debug\Server.csproj.GenerateResource.cache
+C:\Users\Marija\source\repos\Domen\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+C:\Users\Marija\source\repos\Domen\Server\obj\Debug\Server.csproj.CopyComplete
+C:\Users\Marija\source\repos\Domen\Server\obj\Debug\Server.exe
+C:\Users\Marija\source\repos\Domen\Server\obj\Debug\Server.pdb
