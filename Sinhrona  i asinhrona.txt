@@ -1,0 +1,32 @@
+SINHRONO
+
+Forma:
+Na dugme kada zelimo da se desi odredjena akcija kupimo podatke i stavljamo ih u incijalizovanu transfer klasu
+Zovemo funkciju(posalji),prosledjujemo joj transfer i iz nje dobijamo potrebne stvari i sve se stavlja u istu metodu
+
+Komunikacija:
+Izvrsavamo funkciju koja se sastoji iz 2 dela slanja i prijema
+
+NitKlijenta:
+U serveru dodajemo case za odredjenu akciju i preko formatera saljemo nazad
+
+ASINHRONO:
+
+Forma:
+Na dugme kada zelimo da se desi odredjena akcija kupimo podatke i stavljamo ih u incijalizovanu transfer klasu
+Zovemo funkciju,prosledjujemo joj transfer za neku akciju(posalji), a ona daje odgovor u drugoj metodi koja je nezavisna
+Takodje, ta druga metoda je podeljena na 2 metode,primanje i prikaz ukoliko je to slucaj
+Kada se forma loaduje moramo da koristimo ThreadStart
+Potrebno je napraviti delegat koji se odnosi na metodu prikaz, a poziva se iz metoda primi
+
+Komunikacija:
+Izvrsavamo funkciju koja se deli na 2 metode slanje i prijem
+
+Server:
+Pravimo listu tokova koja je STATIC
+U metodi osluskuj na kraju dodajemo tok u listu tokova
+
+NitKlijenta:
+U exception u novom try catch bloku izbacujemo tok iz liste a u novom catchu ostavljamo prazno da se ne bi izgubila konekcija
+U metodi obradi vracanje odgovora tj formater stavljamo u foreach petlju i ide kroz taj niz tokova
+U metodi obradi u slucaju da je operacija kraj iliti 1 tada izbacujemo tok iz liste tokova

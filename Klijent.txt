@@ -1,0 +1,168 @@
+I New project->Windows form aplication->KorisnickiInterfejs(Solution:Kurirska sluzba)
+		stavimo ga za start up project
+		->Add->Reference->Biblioteka i Sesija
+II Solution->Add->New project->Class Library->Bilbioteka
+III Solution->Add->New project->Class Library->Sesija
+		klasu preimenujemo u Broker
+		->Add->Reference->Biblioteka
+I U klasi program dodajemo:
+	using Biblioteka;
+	using Sesija;
+III U klasi broker dodajemo:
+	using Biblioteka;
+	using System.Data;
+	using System.Data.SqlClient;
+    Takodje:
+	SqlCommand komanda;
+	SqlConnection konekcija;
+	SqlTransaction transakcija;
+
+	*Formiranje konekcije->Tools->Connect to Database->Postavimo Microsoft SQL Server
+	 ->izaberem Server name i bazu->na Advanced idem i kopiram link koji ubacujem u kod
+	*Ako se slucajno ne kopira link u DataConnections ce se pojaviti konekcija i desni klik na Properties i desno cemo vidjeti link
+
+	void konektujSe()
+	{
+		konekcija=new SqlConnection(@"kopirani link")
+		komanda=konekcija.CreateCommand();
+	}
+
+	//singleton patter(omogucava stalnu konekciju na bazu,iako dodje do prekida konekcije)
+	*pravim PRIVATE konstruktor
+
+	Broker()
+	{
+		konektujSe();
+	}
+
+	*opet private
+	static Broker instanca;
+	*sad public(proverava konekciju)
+	*proverava da li je instanca formirana
+	*ako nije pravi je i vraca je,ukoliko jeste vraca staru instancu
+
+	public static Broker dajSesiju()
+	{
+		if(instanca==null) instanca=new Broker();
+		return instanca;
+	}
+
+**do ovde je stalno isto,dalje zavisi od zadatka
+
+*Za formu:
+	View->Toolbox
+	menuStrip za meni
+	UseSystemPasswordChar->True ako ocemo tackice za pass
+	Ako ocemo da prikazemo nesto na formi sto ne unosi korisnik mozemo preko labele ili preko textboxa ali da stavimo ReadOnly->TRUE
+	Ako zelim na nesto iz forme da ugasim aplikaciju kliknem na to 2 puta,otvori se kod i u metodi napisem Application.Exit();
+*Za novu formu(Login):
+	Desni klik na KorisnickiInterfejs->Add->Windows form->Login
+	Napravim formu sa:label,textbox,button(sve ih imenujemo u textu)
+	Za password stavim UseSystemPasswordChar na TRUE
+*Kako da login formu postavimo za pocetnu:
+	U KorisnickiInterfejs u klasi Program u Main metodi u  zadnjem redu
+	Application.Run(new PocetnaForma()); stavimo new Login()
+*Pravljenje klasa u Biblioteka:
+	Prvo napravim sve klase i stavim da su public
+	Geteri i seteri(Ctrl.)
+	Kod jakog objekta:
+		-using System.ComponentModel;
+		-BindingList<SlabObjekat> lista;
+		-Neparametarski konstruktor:
+		 public JakObjekat()
+		 {
+		 	lista=new BindingList<SlabObjekat>();
+		 }
+	Kod slabog objekta:
+		-ne prenosim cijelu klasu jakog objekta
+		-ne stavljamo kao atribut JakObjekat jakobjekat vec samo int id
+LOGIN
+*Svaki rad sa bazom:
+	ima try catch blok u kodu(try tabtab)
+	mora otvoriti konekciju,ispisati neki upit i zatvoriti konekciju
+*Metoda koja provjerava da li u nasoj bazi postoji korisnik sa odredjenim username i pass(Broker)
+*Button metoda
+*Ako zelim da kad se korisnik uloguje i izadje mu nova forma da se izadje iz logina:
+	U button metoda na kraju u elsu prije otvaranja nove forme napisemo this.Hide();
+*Ako zelim da se iz pocetne forme vrati na login formu onda na dugme kraj u kodu
+	ne pisem Application.Exit() vec this.Close(); 
+	a u login dugme u kodu posle otvaranje nove forme napisem this.Show();
+*Prenos podataka iz forme u formu se vrsi preko konstruktora
+	Kad napravimo konstruktor obavezno ubacimo InitializeComponent()
+	Da bi napisali ime u zaglavlju forme: this.Text=s.ime+s.prezime;
+
+REALIZACIJA PROSTOG SLUCAJA KORISCENJA(Posiljka)
+*Pravimo formu
+*Kad je napravimo idemo u pocetnu formu i klinemo 2 puta na unos da udjemo u kod
+ i tu upisemo new UnosPosiljke().ShowDialog();
+*Sad sredjujemo combobox
+ Pisemo metodu u Brokeru vratiSvaMesta() i ona vraca listu mesta
+ Onda idemo na UnosPosiljke i kliknemo 2 puta u zaglavlje i u toj metodi punimo combobox(2 nacina)
+ 1.cmbMestoIz.DataSource = Broker.dajSesiju().vratiSvaMesta();
+   cmbMestoIz.DisplayMember = "Naziv";
+ 2.foreach(Mesto m in Broker.dajSesiju().vratiSvaMesta())
+   {
+        cmbMestoU.Items.Add(m);
+   }
+     //ne mora DisplayMember ako imamo override ToString metode u klasi Mesto
+     //DisplayMember ima prednost u odnosu na override
+     public override string ToString()
+     {
+          return naziv + "-" + ptt;
+     }
+*Treba da obezbijedim da radi dugme sacuvaa isifru ili id koji treba sam da se generise:
+ Pravim metodu vratiSifru u Brokeru koja ne otvara i zatvara konekciju i onda ce da se poziva unutar metode sacuvajPosiljku
+ Onda 2 klika na dugme sacuvaj i tu pisemo kod,gde kupimo sve podatke i zovemo brokera da sacuva posiljku
+
+*Sta ako hocu da moze da se popunjava vise posiljki odjednom
+ Prvo uredimo izgled forme
+	(AllowUserToAddRows->False) da ne moze sam korisnik da popunjava i da nema nista
+	(AutoSizeColumnsMode->Fill) da ne mora da se skoluje po kolonama
+ Onda u kodu u UnosPosiljke napisemo BindingList<Posiljka> listaPosiljki;
+ Onda u loadu kod popunjavanje comboa popunjavamo i grid
+ Dugme Dodaj u listu kliknemo 2 puta i tu pisemo isti kod kao i kod sacuvaj samo ne saljemo brokeru vec dodajemo u listu
+ Izgled forme(ovo se radi u datoj klasi i potrebno je using System.ComponentModel):
+ 	-Ako ne zelimo da nam prikazuje id u listi to resavamo u klasi Posiljka: [Browsable(false)] 
+	-Ako zelimo da promijenimo i listi redosled atributa samo to uradimo u klasi sa propertijima
+ 	-Ako zelim Adresu da spojim sa MestoU tj da ih spojim u jednu:na oba propertija stavim [Browsable(false)] i napravim getter Vrati
+		[DisplayName("Adresa")]
+		public string Vrati
+		{
+			get{retun adresa+", "+uMesto.Ptt+", "+uMesto.Naziv;}
+		}
+	-Ako zelim da promijenim ime tabeli [DisplayName("ime")]
+ Dalje radimo dugmad Obrisi jedan i Obrisi sve(kratko)
+ Sad radimo dugme Sacuvaj sve(koristimo transakciju):prvo u brokera pa onda 2 klika na drugme
+ U brokeru u metodi sacuvajSve se prosledjuje obicna a ne binding lista a u formi binding konvertujemo u obicnu
+
+*Kad nam treba veci text box(sa skrolovanjem) onda uzmemo obicni text box i idemo na strelicu i cekiramo MultiLine pa u propertije na ScrollBars stavimo sta nam treba
+*Ako npr korisnik nema vise pravo na Login i ocemo da zakljucamo dugme: button.Enabled=false;
+
+JAK I SLAB
+*Kada imamo jak i slab objekat u jak ubacujemo listu slabog
+*Uvek pravimo konstruktor u jakom da bi inicijalizovali listu
+*Atribut jakog objekta ubacujemo na formi
+*a inicijalizujemo objekat i njegovu listu u loadu forme sem kad npr zbog ponavljanja id ga ubacujemo negde drugo
+*u bazi se cuva prvo jak pa slab
+*u slabom objektu ne treba kljuc od jakog jer ce mu uvek biti dostupan
+*za jak i slab objekat ne moze join
+
+*ako ocemo neki upit da proverimo idemo u bazu i na New query ukucamo u pustimo
+*bool je u bazi bit
+*double je numeric
+
+SPECIJALIZACIJA
+*Specijalizacija u bazama je nasledjivanje u programiranju
+*atributi obavezno na PROTECTED
+
+*drugi nacin za sakrivanje tabele: dgv1.Columns[0].Visible=false;
+
+*kraj uvek ide na glavnoj formi
+
+*na novu formu uvek slati sve atribute postojece forme
+
+*kada god brisemo neku stavku tj iz slabi objekat uvek resetujemo sifre sa i i petljom foreach
+
+*kada oduzimamo datume dobijamo interval pa mozemo sa .Seconds da trazimo npr sekunde
+
+*kada imamo sumu u upitu moramo da radimo group by sa svime iz selecta sem ovoga sto smo stavili pod funkciju

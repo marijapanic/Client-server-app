@@ -1,0 +1,28 @@
+BAZA:
+Kada izadje prozorcic izaberemo server name(SQL Express)->Connect
+*Da li je server pokrenut->Sql server->Configuration tools->vidimo da li je running
+
+Desni klik na Databases->unesemo Database name->OK
+Desni klik na Tables->New table
+*Desni klik na polje koje zelimo da bude primarni kljuc->Set primary key
+*Ctrl+S da sacuvamo tabelu
+*Desni klik na Table->Refresh da vidimo tabelu
+*Ako nesto promasimo u unosu na tablelu desni klik->Script table as->Drop and Create to->New query editor
+
+Database Diagrams->New Database Diagram da povezemo tabele
+*Insert and Update Specification->Update rule->Cascade!!!
+*Kod jakog i slabog objekta i Update rule i Delete rule->Cascade!!!
+*Ako je dupla veza onda jedna veta ostaje na No Action!!!
+
+Exportovanje baze:
+Desni klik na bazu->Tasks->Generate Scripts->Next->Next->Advances->Types of data to script->Schema and data
+
+Kako ucitavamo ako nam daju bazu:
+Napravimo bazu
+File->Open file->Odabremo bazu
+Sve brisemo do USE[baza] i kliknemo Execute
+
+Punjenje baze:
+Desni klik na tabelu->Edit top 200 rows
+
+Kada je ubacuje skripta u bazu tada se u skripti brise do USE[]
