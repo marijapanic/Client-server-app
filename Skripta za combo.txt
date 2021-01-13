@@ -1,0 +1,26 @@
+void popuniGrid()
+        {
+            DataGridViewComboBoxColumn domacin = new DataGridViewComboBoxColumn();
+            DataGridViewComboBoxColumn gost = new DataGridViewComboBoxColumn();
+
+            domacin.HeaderText = "Domacin";
+            domacin.Name = "domacin";
+            domacin.DataPropertyName = "Domacin";
+            domacin.DataSource = k.vratiReprezentacije();
+            domacin.ValueMember = "Objekat";
+            domacin.DisplayMember = "Naziv";
+
+            gost.HeaderText = "Gost";
+            gost.Name = "gost";
+            gost.DataPropertyName = "Gost";
+            gost.DataSource = k.vratiReprezentacije();
+            gost.ValueMember = "Objekat";
+            gost.DisplayMember = "Naziv";
+
+            dataGridView1.Columns.Add(domacin);
+            dataGridView1.Columns.Add(gost);
+
+            dataGridView1.AutoGenerateColumns = false;
+            listaParova = new BindingList<Par>();
+            dataGridView1.DataSource = listaParova;
+        }
