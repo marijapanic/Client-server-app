@@ -40,5 +40,17 @@ namespace Klijent
             // slanje podataka
             formater.Serialize(tok,transfer);
         }
+        /* primer metode
+        public Korisnik login(Korisnik k)
+        {
+            TransferKlasa transfer = new TransferKlasa();
+            transfer.Operacija = Operacije.Login;
+            transfer.TransferObjekat = k;
+            formater.Serialize(tok, transfer);
+
+            transfer = formater.Deserialize(tok) as TransferKlasa;
+            return transfer.Rezultat as Korisnik;
+        }
+        */
     }
 }
