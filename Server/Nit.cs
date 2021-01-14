@@ -36,6 +36,7 @@ namespace Server
 
                     switch (transfer.operacija)
                     {
+                            // kod drugih operacija dodati formater.Serialize(tok, transfer);
                         case Operacije.Kraj: operacija = 1;
                             break;
                         default: break;
