@@ -36,7 +36,11 @@ namespace Server
 
                     switch (transfer.operacija)
                     {
-                            // kod drugih operacija dodati formater.Serialize(tok, transfer);
+                            // primer drugih
+                            //case Operacije.Login:
+                            //transfer.Rezultat = Broker.dajSesiju().login(transfer.TransferObjekat as Korisnik);
+                            //formater.Serialize(tok, transfer);
+                            //break;
                         case Operacije.Kraj: operacija = 1;
                             break;
                         default: break;
