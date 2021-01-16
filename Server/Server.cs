@@ -18,6 +18,7 @@ namespace Server
         {
             try
             {
+                // new IPEndPoint(IPAddress.Parse("127.0.0.1"),18000)
                 soket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 IPEndPoint ep = new IPEndPoint(IPAddress.Any,20000);
                 soket.Bind(ep);
