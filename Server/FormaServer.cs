@@ -13,7 +13,7 @@ namespace Server
     public partial class FormaServer : Form
     {
         Server s;
-        Timer t
+        Timer t;
         public FormaServer()
         {
             InitializeComponent();
