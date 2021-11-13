@@ -1,8 +1,0 @@
-BAZA
-Da li uvijek ide Update u bazi na cascade sem onog jednog slucaja kad jedan ostane miran?
-
-VISUAL STUDIO
-Nov2018-uslov?
-	   
-Okt2017G1-button1_Click(sender,e)?
-
